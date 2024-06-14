@@ -432,7 +432,6 @@ class GoFaArm:
 
         req = GoFaArm._construct_req('get_torques')
         res = self._request(req, True)
-
         if res is not None:
             state = message_to_torques(res.message)
             if raw_res:

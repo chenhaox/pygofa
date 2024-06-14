@@ -50,6 +50,9 @@ MODULE SERVER
     CONST num SERVER_BAD_MSG:=0;
     CONST num SERVER_OK:=1;
 
+    !// Robot torque
+    VAR num torque;
+
     !//Robot Constants
     !// home configuration
     ! //CONST jointtarget jposHomeYuMiL:=[[0,-130,30,0,40,0],[-135,9E+09,9E+09,9E+09,9E+09,9E+09]];
@@ -550,13 +553,25 @@ MODULE SERVER
             CASE 10:
                 !Get Joint Torque Currents
                 IF nParams=0 THEN
-                    addString:=NumToStr(GetMotorTorque(1),2)+" ";
-                    addString:=addString+NumToStr(GetMotorTorque(2),2)+" ";
-                    addString:=addString+NumToStr(GetMotorTorque(3),2)+" ";
-                    addString:=addString+NumToStr(GetMotorTorque(4),2)+" ";
-                    addString:=addString+NumToStr(GetMotorTorque(5),2)+" ";
-                    addString:=addString+NumToStr(GetMotorTorque(6),2);
+                    !//addString:=NumToStr(GetMotorTorque(1),4)+" ";
+                    !//addString:=addString+NumToStr(GetMotorTorque(2),4)+" ";
+                    !//addString:=addString+NumToStr(GetMotorTorque(3),4)+" ";
+                    !//addString:=addString+NumToStr(GetMotorTorque(4),4)+" ";
+                    !//addString:=addString+NumToStr(GetMotorTorque(5),4)+" ";
+                    !//addString:=addString+NumToStr(GetMotorTorque(6),4);
                     !End of string
+                    GetJointData \MechUnit:=ROB_1, 1 \Torque:=torque;
+                    addString:=NumToStr(torque,4)+" ";
+                    GetJointData \MechUnit:=ROB_1, 2 \Torque:=torque;
+                    addString:=addString+NumToStr(torque,4)+" ";
+                    GetJointData \MechUnit:=ROB_1, 3 \Torque:=torque;
+                    addString:=addString+NumToStr(torque,4)+" ";
+                    GetJointData \MechUnit:=ROB_1, 4 \Torque:=torque;
+                    addString:=addString+NumToStr(torque,4)+" ";
+                    GetJointData \MechUnit:=ROB_1, 5 \Torque:=torque;
+                    addString:=addString+NumToStr(torque,4)+" ";
+                    GetJointData \MechUnit:=ROB_1, 6 \Torque:=torque;
+                    addString:=addString+NumToStr(torque,4);
                     !End of string
                     ok:=SERVER_OK;
                 ELSE
