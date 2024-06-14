@@ -587,7 +587,7 @@ class GoFaArm:
         return
 
     def _goto_state_sync(self, state, wait_for_res=True):
-        body = GoFaArm._iter_to_str('{:.2f}', state.jnts)
+        body = GoFaArm._iter_to_str('{:.2f}', state.joints)
         req = GoFaArm._construct_req('goto_joints_sync', body)
         return self._request(req, wait_for_res, timeout=self._motion_timeout)
 
@@ -1023,7 +1023,7 @@ class GoFaArm:
         return ress
 
     def buffer_j_add_single2(self, state_list, wait_for_res):
-        body = GoFaArm._iter_to_str('{:.2f}', [v for state in state_list for v in state.jnts])
+        body = GoFaArm._iter_to_str('{:.2f}', [v for state in state_list for v in state.joints])
         req = GoFaArm._construct_req('buffer_j_add_all', f"{len(state_list)} " + body)
         return self._request(req, wait_for_res)
 
