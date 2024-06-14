@@ -30,6 +30,9 @@ class GoFaArmController:
     def get_torques(self) -> np.ndarray:
         """
         get the torques of joints
+        See 1: https://library.e.abb.com/public/b227fcd260204c4dbeb8a58f8002fe64/Rapid_instructions.pdf
+        See 2: https://forums.robotstudio.com/discussion/13247/motor-torque-using-getmotortorque-vs-getjointdata
+        Notes: When the GoFa joints lock (idle), the torques are zeros.
         :return: joints
         """
         return np.asarray(self.arm.get_torques())
