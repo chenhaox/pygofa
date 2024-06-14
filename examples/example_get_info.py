@@ -10,4 +10,3 @@ if __name__ == "__main__":
     j_val = arm.get_jnt_values()
     print("Joint values: ", j_val)
     arm.stop()
-import numpy as np

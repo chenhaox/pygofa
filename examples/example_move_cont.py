@@ -10,5 +10,5 @@ if __name__ == "__main__":
     arm = GoFaArmController(toggle_debug=False)
     if len(paths) > 0:
         arm.move_j(paths[0])
-        arm.move_jntspace_path(paths)
+        arm.move_jntspace_path(paths, speed_n=100)
     arm.stop()
