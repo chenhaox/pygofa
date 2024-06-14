@@ -15,7 +15,7 @@ from .autolab_core import RigidTransform
 from .gofa_constants import GoFaConstants as GFC
 from .gofa_state import GoFaState
 from .gofa_motion_logger import GoFaMotionLogger
-from .util import message_to_state, message_to_pose
+from .util import message_to_state, message_to_pose, message_to_torques
 from .gofa_exceptions import GoFaCommException, GoFaControlException
 import pickle
 import struct
@@ -401,6 +401,40 @@ class GoFaArm:
 
         if res is not None:
             state = message_to_state(res.message)
+            if raw_res:
+                return _RES(res, state)
+            else:
+                return state
+
+    def get_torques(self, raw_res=False):
+        '''Get the torques (current) of joints.
+
+        Parameters
+        ----------
+        raw_res : bool, optional
+                If True, will return raw_res namedtuple instead of GoFaState
+                Defaults to False
+
+        Returns
+        -------
+        out :
+            GoFaState if raw_res is False
+
+            _RES(raw_res, state) namedtuple if raw_res is True
+
+        Raises
+        ------
+        GoFaCommException
+            If communication times out or socket error.
+        '''
+        if self._debug:
+            return GoFaState()
+
+        req = GoFaArm._construct_req('get_torques')
+        res = self._request(req, True)
+
+        if res is not None:
+            state = message_to_torques(res.message)
             if raw_res:
                 return _RES(res, state)
             else:

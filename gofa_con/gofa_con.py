@@ -7,7 +7,7 @@ import numpy as np
 
 from .gofa_arm import GoFaArm
 from .gofa_state import GoFaState
-from piecewisepoly import PiecewisePoly
+from .piecewisepoly import PiecewisePoly
 
 
 class GoFaArmController:
@@ -26,6 +26,14 @@ class GoFaArmController:
 
     def get_pose(self, component_name, return_conf=False):
         raise NotImplementedError
+
+    def get_torques(self) -> np.ndarray:
+        """
+        get the torques of joints
+        :return: joints
+        """
+        return np.asarray(self.arm.get_torques())
+
 
     def move_j(self, jnt_vals: np.ndarray, speed_n=100, wait=True):
         """
