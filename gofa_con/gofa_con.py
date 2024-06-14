@@ -27,6 +27,14 @@ class GoFaArmController:
     def get_pose(self, component_name, return_conf=False):
         raise NotImplementedError
 
+    def get_jnt_values(self, ):
+        """
+        get the joint angles of both arms
+        :return: 1x6 array
+        author: chen
+        """
+        return np.deg2rad(self.rbtx.get_state().joints)
+
     def get_torques(self) -> np.ndarray:
         """
         get the torques of joints
@@ -36,7 +44,6 @@ class GoFaArmController:
         :return: joints
         """
         return np.asarray(self.arm.get_torques())
-
 
     def move_j(self, jnt_vals: np.ndarray, speed_n=100, wait=True):
         """
@@ -73,14 +80,6 @@ class GoFaArmController:
            conf: np.ndarray = None,
            ext_axis: float = None) -> np.ndarray or None:
         raise NotImplementedError
-
-    def get_jnt_values(self, ):
-        """
-        get the joint angles of both arms
-        :return: 1x6 array
-        author: chen
-        """
-        return np.deg2rad(self.rbtx.get_state().joints)
 
     def move_jntspace_path(self, path, speed_n=100, wait=True) -> bool:
         """
