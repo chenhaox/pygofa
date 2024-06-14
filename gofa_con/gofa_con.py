@@ -7,9 +7,7 @@ import numpy as np
 
 from .gofa_arm import GoFaArm
 from .gofa_state import GoFaState
-
-
-# from motion.trajectory.piecewisepoly import PiecewisePoly
+from piecewisepoly import PiecewisePoly
 
 
 class GoFaArmController:
@@ -20,7 +18,7 @@ class GoFaArmController:
     def __init__(self, toggle_debug=False):
         self.rbtx = GoFaArm(debug=toggle_debug)
         self._is_add_all = True
-        # self._traj_opt = PiecewisePoly()
+        self._traj_opt = PiecewisePoly()
 
     @property
     def arm(self):
