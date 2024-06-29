@@ -550,34 +550,6 @@ MODULE SERVER
                 ELSE
                     ok:=SERVER_BAD_MSG;
                 ENDIF
-            CASE 10:
-                !Get Joint Torque Currents
-                IF nParams=0 THEN
-                    !//addString:=NumToStr(GetMotorTorque(1),4)+" ";
-                    !//addString:=addString+NumToStr(GetMotorTorque(2),4)+" ";
-                    !//addString:=addString+NumToStr(GetMotorTorque(3),4)+" ";
-                    !//addString:=addString+NumToStr(GetMotorTorque(4),4)+" ";
-                    !//addString:=addString+NumToStr(GetMotorTorque(5),4)+" ";
-                    !//addString:=addString+NumToStr(GetMotorTorque(6),4);
-                    !End of string
-                    GetJointData \MechUnit:=ROB_1, 1 \Torque:=torque;
-                    addString:=NumToStr(torque,4)+" ";
-                    GetJointData \MechUnit:=ROB_1, 2 \Torque:=torque;
-                    addString:=addString+NumToStr(torque,4)+" ";
-                    GetJointData \MechUnit:=ROB_1, 3 \Torque:=torque;
-                    addString:=addString+NumToStr(torque,4)+" ";
-                    GetJointData \MechUnit:=ROB_1, 4 \Torque:=torque;
-                    addString:=addString+NumToStr(torque,4)+" ";
-                    GetJointData \MechUnit:=ROB_1, 5 \Torque:=torque;
-                    addString:=addString+NumToStr(torque,4)+" ";
-                    GetJointData \MechUnit:=ROB_1, 6 \Torque:=torque;
-                    addString:=addString+NumToStr(torque,4);
-                    !End of string
-                    ok:=SERVER_OK;
-                ELSE
-                    ok:=SERVER_BAD_MSG;
-                ENDIF
-                !---------------------------------------------------------------------------------------------------------------
             CASE 13:
                 !Relative Cartesian Move
                 IF nParams=3 THEN
@@ -605,6 +577,49 @@ MODULE SERVER
                         ok := SERVER_BAD_MSG;
                         addString := "Unreachable Pose";
                     ENDIF
+                ELSE
+                    ok:=SERVER_BAD_MSG;
+                ENDIF
+                !---------------------------------------------------------------------------------------------------------------
+            CASE 14:
+                !Get Joint Torque Currents
+                IF nParams=0 THEN
+                    !//addString:=NumToStr(GetMotorTorque(1),4)+" ";
+                    !//addString:=addString+NumToStr(GetMotorTorque(2),4)+" ";
+                    !//addString:=addString+NumToStr(GetMotorTorque(3),4)+" ";
+                    !//addString:=addString+NumToStr(GetMotorTorque(4),4)+" ";
+                    !//addString:=addString+NumToStr(GetMotorTorque(5),4)+" ";
+                    !//addString:=addString+NumToStr(GetMotorTorque(6),4);
+                    !End of string
+                    GetJointData \MechUnit:=ROB_1, 1 \Torque:=torque;
+                    addString:=NumToStr(torque,4)+" ";
+                    GetJointData \MechUnit:=ROB_1, 2 \Torque:=torque;
+                    addString:=addString+NumToStr(torque,4)+" ";
+                    GetJointData \MechUnit:=ROB_1, 3 \Torque:=torque;
+                    addString:=addString+NumToStr(torque,4)+" ";
+                    GetJointData \MechUnit:=ROB_1, 4 \Torque:=torque;
+                    addString:=addString+NumToStr(torque,4)+" ";
+                    GetJointData \MechUnit:=ROB_1, 5 \Torque:=torque;
+                    addString:=addString+NumToStr(torque,4)+" ";
+                    GetJointData \MechUnit:=ROB_1, 6 \Torque:=torque;
+                    addString:=addString+NumToStr(torque,4);
+                    !End of string
+                    ok:=SERVER_OK;
+                ELSE
+                    ok:=SERVER_BAD_MSG;
+                ENDIF
+                !---------------------------------------------------------------------------------------------------------------
+            CASE 15:
+                !Get Joint Torque Currents
+                IF nParams=0 THEN
+                    addString:=NumToStr(GetMotorTorque(1),5)+" ";
+                    addString:=addString+NumToStr(GetMotorTorque(2),5)+" ";
+                    addString:=addString+NumToStr(GetMotorTorque(3),5)+" ";
+                    addString:=addString+NumToStr(GetMotorTorque(4),5)+" ";
+                    addString:=addString+NumToStr(GetMotorTorque(5),5)+" ";
+                    addString:=addString+NumToStr(GetMotorTorque(6),5);
+                    !End of string
+                    ok:=SERVER_OK;
                 ELSE
                     ok:=SERVER_BAD_MSG;
                 ENDIF

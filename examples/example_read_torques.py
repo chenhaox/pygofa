@@ -11,6 +11,8 @@ if __name__ == "__main__":
     arm = GoFaArmController(toggle_debug=False)
     for i in range(1000):
         torque_val = arm.get_torques()
+        torque_val_current = arm.get_torques_current()
         print("Torque values: ", torque_val)
+        print("Torque values in current: ", torque_val_current)
         time.sleep(.1)
     arm.stop()
