@@ -3,6 +3,10 @@ MODULE SEC_SERVER
     !/////////////////////////////////////////////////////////////////////////////////////////////////////////
     !GLOBAL VARIABLES
     !////////////////////////////////////////////////////////////////////////////////////////////////////////
+    !//Robot configuration
+    PERS tooldata currentTool:=[TRUE,[[0,0,0],[1,0,0,0]],[0.001,[0,0,0.001],[1,0,0,0],0,0,0]];
+    PERS wobjdata currentWobj:=[FALSE,TRUE,"",[[0,0,0],[1,0,0,0]],[[0,0,0],[1,0,0,0]]];
+
     !//PC communication
     VAR socketdev clientSocket;
     VAR socketdev serverSocket;
@@ -170,6 +174,7 @@ MODULE SEC_SERVER
         !//Reconnect after sending ack
         VAR bool reconnect;
         !//Drop and reconnection happened during serving a command
+        VAR robtarget cartesianPose;
         VAR jointtarget jointsPose;
 
         !//Socket connection
@@ -199,6 +204,29 @@ MODULE SEC_SERVER
             CASE 0:
                 !Ping
                 IF nParams=0 THEN
+                    ok:=SERVER_OK;
+                ELSE
+                    ok:=SERVER_BAD_MSG;
+                ENDIF
+                !---------------------------------------------------------------------------------------------------------------
+            CASE 3:
+                !Get Cartesian Coordinates (with current tool and workobject)
+                IF nParams=0 THEN
+                    cartesianPose:=CRobT(\Tool:=currentTool\WObj:=currentWObj);
+                    addString:=NumToStr(cartesianPose.trans.x,2)+" ";
+                    addString:=addString+NumToStr(cartesianPose.trans.y,2)+" ";
+                    addString:=addString+NumToStr(cartesianPose.trans.z,2)+" ";
+                    addString:=addString+NumToStr(cartesianPose.rot.q1,3)+" ";
+                    addString:=addString+NumToStr(cartesianPose.rot.q2,3)+" ";
+                    addString:=addString+NumToStr(cartesianPose.rot.q3,3)+" ";
+                    addString:=addString+NumToStr(cartesianPose.rot.q4,3)+" ";
+                    !// Added by Hao CHEN (chen960216@gmail.com) 20230829osaka
+                    addString:=addString+NumToStr(cartesianPose.robconf.cf1,0)+" ";
+                    addString:=addString+NumToStr(cartesianPose.robconf.cf4,0)+" ";
+                    addString:=addString+NumToStr(cartesianPose.robconf.cf6,0)+" ";
+                    addString:=addString+NumToStr(cartesianPose.robconf.cfx,0)+" ";
+                    addString:=addString+NumToStr(cartesianPose.extax.eax_a,2);
+                    !End of string
                     ok:=SERVER_OK;
                 ELSE
                     ok:=SERVER_BAD_MSG;
