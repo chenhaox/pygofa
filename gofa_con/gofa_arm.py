@@ -189,6 +189,7 @@ class GoFaArm:
             'zone': None,
             'speed': None,
             'tool': None,
+            'payload': None,
         }
 
     def reset_settings(self):
@@ -810,6 +811,18 @@ class GoFaArm:
         body = GoFaArm._iter_to_str('{:2f}', data)
         req = GoFaArm._construct_req('set_zone', body)
         self._last_sets['zone'] = zone_data
+        return self._request(req, wait_for_res)
+
+    def set_payload(self,
+                    mass,
+                    com=np.array([0, 0, 0]),
+                    aom_q=np.array([1, 0, 0, 0]),
+                    inertia=np.array([0, 0, 0]),
+                    wait_for_res=True):
+        payload_data = (mass, *com, *aom_q, *inertia)
+        body = GoFaArm._iter_to_str('{:2f}', payload_data)
+        req = GoFaArm._construct_req('set_payload', body)
+        self._last_sets['payload'] = payload_data
         return self._request(req, wait_for_res)
 
     def move_circular(self, center_pose, target_pose, wait_for_res=True):

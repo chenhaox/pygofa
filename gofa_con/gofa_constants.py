@@ -51,6 +51,7 @@ class GoFaConstants:
         'set_tool': 6,
         'set_speed': 8,
         'set_zone': 9,
+        'set_payload': 10,
 
         'goto_pose_sync': 11,
         'goto_joints_sync': 12,

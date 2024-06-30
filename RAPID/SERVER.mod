@@ -9,6 +9,7 @@ MODULE SERVER
     PERS wobjdata currentWobj:=[FALSE,TRUE,"",[[0,0,0],[1,0,0,0]],[[0,0,0],[1,0,0,0]]];
     PERS speeddata currentSpeed;
     PERS zonedata currentZone;
+    PERS loaddata currentLoad:= [ 1.2, [0, 0, 0], [1, 0, 0, 0], 0, 0, 0 ];
 
     !//PC communication
     VAR socketdev clientSocket;
@@ -55,7 +56,8 @@ MODULE SERVER
 
     !//Robot Constants
     !// home configuration
-    ! //CONST jointtarget jposHomeYuMiL:=[[0,-130,30,0,40,0],[-135,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST jointtarget homeGOFA:=[[0,0,0,0,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
     !// PERS tasks tasklistArms{2}:=[["T_ROB1"],["T_ROB_R"]];
     !// VAR syncident Sync_Start_Arms;
     !// VAR syncident Sync_Stop_Arms;
@@ -266,6 +268,7 @@ MODULE SERVER
         currentSpeed:=vmax;
         !currentZone:=[FALSE,0.3,0.3,0.3,0.03,0.3,0.03];
         currentZone:=fine; !z0
+        currentLoad:= [ 0.001, [0, 0, 0.001], [1, 0, 0, 0], 0, 0, 0 ];
 
         !Find the current external axis values so they don't move when we start
         jointsTarget:=CJointT();
@@ -546,6 +549,19 @@ MODULE SERVER
                         currentZone.pzone_ori:=params{3};
                         currentZone.zone_ori:=params{4};
                     ENDIF
+                    ok:=SERVER_OK;
+                ELSE
+                    ok:=SERVER_BAD_MSG;
+                ENDIF
+            CASE 10:
+                !Set payload data
+                IF nParams=11 THEN
+                    currentLoad.mass:= params{1};
+                    currentLoad.cog:= [params{2},params{3},params{4}];
+                    currentLoad.aom:= [params{5},params{6},params{7},params{8}];
+                    currentLoad.ix:=params{9};
+                    currentLoad.iy:=params{10};
+                    currentLoad.iz:=params{11};
                     ok:=SERVER_OK;
                 ELSE
                     ok:=SERVER_BAD_MSG;

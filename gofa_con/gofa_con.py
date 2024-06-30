@@ -28,6 +28,29 @@ class GoFaArmController:
     def arm(self):
         return self.rbtx if not self._toggle_monitor_only else self.sec_rbtx
 
+    def set_payload(self,
+                    mass,
+                    com=np.array([0, 0, 0]),
+                    aom_q=np.array([1, 0, 0, 0]),
+                    inertia=np.array([0, 0, 0]), ):
+        """
+
+        Parameters
+        ----------
+        mass: Mass of TCP
+        com: center of mass position
+        aom_q: orientation of axis of momentum (quaternion)
+        inertial: ix iy iz moments of inertia
+
+        Returns
+        -------
+
+        """
+        self.rbtx.set_payload(mass=mass,
+                              com=com,
+                              aom_q=aom_q,
+                              inertia=inertia, )
+
     def get_pose(self, component_name, return_conf=False):
         raise NotImplementedError
 
